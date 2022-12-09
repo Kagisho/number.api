@@ -1,6 +1,6 @@
 package com.example.services
 
-import com.example.functions.Statics
+import com.example.functions.StaticFunctions
 import com.example.models.NumberMetadataResponse
 
 class NumberService : INumberService {
@@ -8,7 +8,7 @@ class NumberService : INumberService {
 
         val num = NumberMetadataResponse().apply {
             this.number = number
-            this.nameOfDayOfTheWeek =  Statics.getDayOfTheWeekName(number)
+            this.nameOfDayOfTheWeek =  StaticFunctions.getDayOfTheWeekName(number)
         }
         return num
     }

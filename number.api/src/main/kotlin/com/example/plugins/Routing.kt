@@ -1,6 +1,6 @@
 package com.example.plugins
 
-import com.example.functions.Statics.Companion.isNumber
+import com.example.functions.StaticFunctions.Companion.isNumber
 import com.example.services.NumberService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -15,10 +15,10 @@ fun Application.configureRouting() {
     val numberService = NumberService()
 
     routing {
-
+        // TODO: May need to put these routes in their own package\module\class
         route("/") {
             get {
-                call.respondText ("Welcome to the Number Api. Call /number/<your_number> to get a result", status = HttpStatusCode.OK)
+                call.respondText ("Welcome to the Numbers Api. Call /number/<your_number> to get a metadata result.", status = HttpStatusCode.OK)
             }
 
             get("number/{number}") {
@@ -29,7 +29,7 @@ fun Application.configureRouting() {
                     call.respond(numberResponse)
                 }
                 else {
-                    call.respondText ("Input $number is an invalid number. Please input an integer" )
+                    call.respondText ("Input '$number' is an invalid number. Please input an integer.",  status = HttpStatusCode.BadRequest)
                 }
             }
         }

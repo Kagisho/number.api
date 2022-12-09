@@ -2,7 +2,7 @@ package com.example.functions
 
 import com.example.models.DayOfTheWeekEnum
 
-class Statics {
+class StaticFunctions {
     companion object {
         fun getDayOfTheWeekName(number: Int): DayOfTheWeekEnum {
             return when (number) {
