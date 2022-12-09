@@ -5,10 +5,11 @@ import com.example.models.NumberMetadataResponse
 
 class NumberService : INumberService {
     override fun getNumberMetadata(number: Int): NumberMetadataResponse {
-        var num = NumberMetadataResponse()
-        num.nameOfDayOfTheWeek =  Statics.getDayOfTheWeekName(number)
-        num.number = number
 
+        val num = NumberMetadataResponse().apply {
+            this.number = number
+            this.nameOfDayOfTheWeek =  Statics.getDayOfTheWeekName(number)
+        }
         return num
     }
 

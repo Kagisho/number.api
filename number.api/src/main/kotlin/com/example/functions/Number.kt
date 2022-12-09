@@ -16,5 +16,12 @@ class Statics {
                 else -> DayOfTheWeekEnum.Unknown
             }
         }
+
+        fun String.isNumber() : Boolean {
+
+            if (this == null) return false
+
+            return this.all { Character.isDigit(it)}
+        }
     }
 }

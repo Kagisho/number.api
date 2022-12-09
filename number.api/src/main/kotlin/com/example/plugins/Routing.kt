@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.functions.Statics.Companion.isNumber
 import com.example.services.NumberService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -8,24 +9,27 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
 
-    val _numberService = NumberService()
+    // TODO: Wire up logging
+    // TODO: Wire up swagger
+    // TODO: Is there a way to load this using dependency injection?
+    val numberService = NumberService()
 
     routing {
-        route("/number") {
+
+        route("/") {
             get {
-                call.respondText("Welcome to the number api. Call /number/<your_number> to get a result", status = HttpStatusCode.OK)
+                call.respondText ("Welcome to the Number Api. Call /number/<your_number> to get a result", status = HttpStatusCode.OK)
             }
 
-            get("{number}") {
+            get("number/{number}") {
                 val number = call.parameters["number"]
-                var isNumber = number?.all { Character.isDigit(it)}
 
-                if(isNumber == true) {
-                    val numberResponse = _numberService.getNumberMetadata(number!!.toInt())
+                if(number?.isNumber() == true) {
+                    val numberResponse = numberService.getNumberMetadata(number!!.toInt())
                     call.respond(numberResponse)
                 }
                 else {
-                    call.respondText ("Input number $number is invalid. Please input an integer" )
+                    call.respondText ("Input $number is an invalid number. Please input an integer" )
                 }
             }
         }
