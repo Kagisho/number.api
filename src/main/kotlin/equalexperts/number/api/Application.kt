@@ -1,7 +1,7 @@
-package com.example
+package equalexperts.number.api
 
-import com.example.plugins.configureRouting
-import com.example.plugins.configureSerialization
+import equalexperts.number.api.plugins.configureRouting
+import equalexperts.number.api.plugins.configureSerialization
 import io.ktor.server.application.Application
 
 fun main(args: Array<String>): Unit =

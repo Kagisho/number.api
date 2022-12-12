@@ -10,7 +10,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt").version("1.22.0")
 }
 
-group = "com.example"
+group = "equalexperts.number.api"
 version = "0.0.1"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")

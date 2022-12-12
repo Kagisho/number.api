@@ -1,7 +1,7 @@
 package tests
 
-import com.example.models.DayOfTheWeekEnum
-import com.example.services.NumberService
+import equalexperts.number.api.models.DayOfTheWeekEnum
+import equalexperts.number.api.services.NumberService
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertNotEquals
 import org.testng.annotations.Test
@@ -10,11 +10,10 @@ internal class NumberServicesShould {
     // TODO Need to figure out how parameterised tests works for JUNit
     // TODO @DisplayName is not working and the appropriate library for it doesn't get loaded\imported.
     @Test
-    //fun `getNumberMetadata return day of week based on input`() {
     fun getNumberMetadataReturnDayOfWeekBasedOnInput() {
         val numberService = NumberService()
 
-        for (idx in Companion.LOOPSTART..Companion.LOOPEND) {
+        for (idx in LOOPSTART..LOOPEND) {
 
             var dayOfTheWeekName = numberService.getNumberMetadata(idx)
 

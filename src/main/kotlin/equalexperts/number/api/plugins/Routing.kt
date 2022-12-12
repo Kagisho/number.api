@@ -1,7 +1,7 @@
-package com.example.plugins
+package equalexperts.number.api.plugins
 
-import com.example.functions.StaticFunctions.isNumber
-import com.example.services.NumberService
+import equalexperts.number.api.functions.StaticFunctions.isNumber
+import equalexperts.number.api.services.NumberService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -26,6 +26,11 @@ fun Application.configureRouting() {
                     "Welcome to the Numbers Api. Call /number/<your_number> to get a metadata result.",
                     status = HttpStatusCode.OK
                 )
+            }
+            // readiness probe
+            // TODO Use a different port for this
+            get ("/healthy") {
+                call.respond(HttpStatusCode.OK)
             }
 
             get("number/{number}") {
