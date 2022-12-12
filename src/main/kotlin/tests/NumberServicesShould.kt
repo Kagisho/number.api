@@ -7,17 +7,18 @@ import org.testng.Assert.assertNotEquals
 import org.testng.annotations.Test
 
 internal class NumberServicesShould {
-
-    // TODO: Need to figure out how parametarised tests works for JUNit
-    // TODO: @DisplayName is not working and the appropriate library for it doesn't get loaded\imported.
+    // TODO Need to figure out how parameterised tests works for JUNit
+    // TODO @DisplayName is not working and the appropriate library for it doesn't get loaded\imported.
     @Test
-    fun getNumberMetadata_return_day_of_week_based_on_input() {
+    //fun `getNumberMetadata return day of week based on input`() {
+    fun getNumberMetadataReturnDayOfWeekBasedOnInput() {
         val numberService = NumberService()
-        for (idx in -10..10) {
+
+        for (idx in Companion.LOOPSTART..Companion.LOOPEND) {
 
             var dayOfTheWeekName = numberService.getNumberMetadata(idx)
 
-            if (idx in 1..7) {
+            if (idx in DayOfTheWeekEnum.Sunday.numericValue .. DayOfTheWeekEnum.Saturday.numericValue) {
                 assertNotEquals(dayOfTheWeekName.nameOfDayOfTheWeek, DayOfTheWeekEnum.Unknown)
             }
             else {
@@ -26,4 +27,8 @@ internal class NumberServicesShould {
         }
     }
 
+    companion object {
+        const val LOOPSTART = -10
+        const val LOOPEND = 10
+    }
 }

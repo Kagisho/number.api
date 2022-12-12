@@ -1,27 +1,33 @@
 package com.example.functions
 
 import com.example.models.DayOfTheWeekEnum
+import com.example.models.WeekDayIndex.FRIDAY
+import com.example.models.WeekDayIndex.MONDAY
+import com.example.models.WeekDayIndex.SATURDAY
+import com.example.models.WeekDayIndex.SUNDAY
+import com.example.models.WeekDayIndex.THURSDAY
+import com.example.models.WeekDayIndex.TUESDAY
+import com.example.models.WeekDayIndex.WEDNESDAY
 
-class StaticFunctions {
-    companion object {
+object StaticFunctions {
         fun getDayOfTheWeekName(number: Int): DayOfTheWeekEnum {
             return when (number) {
-                1 -> DayOfTheWeekEnum.Sunday
-                2 -> DayOfTheWeekEnum.Monday
-                3 -> DayOfTheWeekEnum.Tuesday
-                4 -> DayOfTheWeekEnum.Wednesday
-                5 -> DayOfTheWeekEnum.Thursday
-                6 -> DayOfTheWeekEnum.Friday
-                7 -> DayOfTheWeekEnum.Saturday
+                SUNDAY -> DayOfTheWeekEnum.Sunday
+                MONDAY -> DayOfTheWeekEnum.Monday
+                TUESDAY -> DayOfTheWeekEnum.Tuesday
+                WEDNESDAY -> DayOfTheWeekEnum.Wednesday
+                THURSDAY -> DayOfTheWeekEnum.Thursday
+                FRIDAY -> DayOfTheWeekEnum.Friday
+                SATURDAY -> DayOfTheWeekEnum.Saturday
                 else -> DayOfTheWeekEnum.Unknown
             }
         }
 
-        fun String.isNumber() : Boolean {
+        fun String.isNumber(): Boolean {
 
             if (this == null) return false
 
-            return this.all { Character.isDigit(it)}
+            return this.all { Character.isDigit(it) }
         }
-    }
-}
+ }
+

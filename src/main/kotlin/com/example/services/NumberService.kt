@@ -12,5 +12,4 @@ class NumberService : INumberService {
         }
         return num
     }
-
 }
