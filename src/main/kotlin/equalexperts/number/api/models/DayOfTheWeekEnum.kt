@@ -8,9 +8,7 @@ import equalexperts.number.api.models.WeekDayIndex.THURSDAY
 import equalexperts.number.api.models.WeekDayIndex.TUESDAY
 import equalexperts.number.api.models.WeekDayIndex.UNKNOWN
 import equalexperts.number.api.models.WeekDayIndex.WEDNESDAY
-//import kotlinx.serialization.Serializable
 
-//@Serializable
 enum class DayOfTheWeekEnum(val numericValue: Int, val displayName: String) {
     Sunday(SUNDAY, "Sunday"),
     Monday(MONDAY, "Monday"),

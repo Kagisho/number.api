@@ -37,7 +37,8 @@ fun Application.configureRouting() {
                 val number = call.parameters["number"]
 
                 if (number?.isNumber() == true) {
-                    val numberResponse = numberService.getNumberMetadata(number.toInt())
+                    val num =  number.toInt()
+                    var numberResponse = numberService.getNumberMetadata(num)
                     call.respond(numberResponse)
                 } else {
                     call.respondText(

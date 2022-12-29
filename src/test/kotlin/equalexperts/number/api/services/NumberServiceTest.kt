@@ -14,7 +14,7 @@ import java.util.stream.Stream
 @TestInstance(PER_CLASS)
 class NumberServiceTest {
 
-    fun provideNumberForDaysOfTheWeek(): Stream<Arguments?>? {
+    fun provideNumbersForDaysOfTheWeek(): Stream<Arguments?>? {
         return Stream.of(
             Arguments.of(1, DayOfTheWeekEnum.Sunday),
             Arguments.of(2, DayOfTheWeekEnum.Monday),
@@ -29,9 +29,9 @@ class NumberServiceTest {
         )
     }
 
-    @ParameterizedTest
-    @MethodSource("provideNumberForDaysOfTheWeek")
-    @DisplayName("provide numbers for days of the week return correct day of the week enum")
+   @ParameterizedTest
+   @MethodSource("provideNumbersForDaysOfTheWeek")
+   @DisplayName("provide numbers for days of the week return correct day of the week enum")
     fun `getNumberMetadata tests`(number : Int,  expected : DayOfTheWeekEnum) {
         val numberService = NumberService()
         var dayOfTheWeekName = numberService.getNumberMetadata(number)
