@@ -11,6 +11,12 @@ import equalexperts.number.api.models.WeekDayIndex.TUESDAY
 import equalexperts.number.api.models.WeekDayIndex.WEDNESDAY
 
 object ExtensionFunctions {
+    fun String.isNumber(): Boolean {
+        if (this.isNullOrEmpty()) return false
+
+        return this.all { Character.isDigit(it) }
+    }
+
     fun Int.toDayOfTheWeek(): DayOfTheWeekEnum {
         return when (this) {
             SUNDAY -> DayOfTheWeekEnum.Sunday

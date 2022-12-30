@@ -1,6 +1,6 @@
 package equalexperts.number.api.plugins
 
-import equalexperts.number.api.functions.StaticFunctions.isNumber
+import equalexperts.number.api.functions.ExtensionFunctions.isNumber
 import equalexperts.number.api.services.NumberService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -29,9 +29,9 @@ fun Application.configureRouting() {
             }
             // readiness probe
             // TODO Use a different port for this
-            get ("/healthy") {
-                call.respond(HttpStatusCode.OK)
-            }
+//            get ("/healthy") {
+//                call.respond(HttpStatusCode.OK)
+//            }
 
             get("number/{number}") {
                 val number = call.parameters["number"]
