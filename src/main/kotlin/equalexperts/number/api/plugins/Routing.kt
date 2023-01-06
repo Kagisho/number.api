@@ -5,6 +5,7 @@ import equalexperts.number.api.services.NumberService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
+import io.ktor.server.plugins.swagger.swaggerUI
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
@@ -13,28 +14,21 @@ import io.ktor.server.routing.routing
 
 fun Application.configureRouting() {
 
-    // TODO Wire up logging
-    // TODO Wire up swagger
     // TODO Is there a way to load this using dependency injection?
     val numberService = NumberService()
 
     routing {
 
-       // swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
+        swaggerUI(path = "swagger", swaggerFile = "documentation.yaml")
 
         route("/") {
             get {
                 call.respondText(
-                    "Welcome to the Numbers Api. Call /number/<your_number> to get a metadata result.",
+                    "Welcome to the Numbers Api. Call /swagger to view Open API Documentation. Call " +
+                            "/number/<your_number> to get a metadata result.",
                     status = HttpStatusCode.OK
                 )
             }
-            // readiness probe
-            // TODO Use a different port for this
-//            get ("/healthy") {
-//                call.respond(HttpStatusCode.OK)
-//            }
-
             get("number/{number}") {
 
                val number = call.parameters["number"]

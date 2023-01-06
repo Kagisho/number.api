@@ -7,7 +7,6 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
-import io.ktor.server.engine.applicationEngineEnvironment
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.callid.CallId
@@ -24,15 +23,18 @@ import io.ktor.server.request.uri
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit {
+
     //io.ktor.server.netty.EngineMain.main(args)
-    val env = applicationEngineEnvironment {
-        module {
-            io.ktor.server.netty.EngineMain.main(args)
-        }
 
-    }
+//    val env = applicationEngineEnvironment {
+//        module {
+//            io.ktor.server.netty.EngineMain.main(args)
+//        }
+//    }
+//    embeddedServer(Netty, env).start(true)
 
-    embeddedServer(Netty, env).start(true)
+    embeddedServer(Netty, port = 8080, host = "127.0.0.1", module = Application::module)
+        .start(wait = true)
 }
 
 const val  MINIMUMPAYLOADSIZE : Long = 3
@@ -83,7 +85,5 @@ fun Application.module() {
 
     configureSerialization()
     configureRouting()
-
-
 }
 

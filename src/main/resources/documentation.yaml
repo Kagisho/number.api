@@ -1,0 +1,18 @@
+openapi: "3.0.3"
+info:
+  title: "number_api API"
+  description: "number_api API"
+  version: "1.0.0"
+servers:
+  - url: "https://number_api"
+paths:
+  /number/{number}:
+    get:
+      summary: "GET number/{number}"
+      parameters:
+        - name: "number"
+          in: "path"
+          required: false
+      responses:
+        "200":
+          description: "OK"
