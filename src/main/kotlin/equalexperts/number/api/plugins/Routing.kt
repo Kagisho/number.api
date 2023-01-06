@@ -22,7 +22,6 @@ fun Application.configureRouting() {
 
        // swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
 
-        // TODO May need to put these routes in their own package\module\class
         route("/") {
             get {
                 call.respondText(
@@ -38,18 +37,19 @@ fun Application.configureRouting() {
 
             get("number/{number}") {
 
-                val number = call.parameters["number"]
+               val number = call.parameters["number"]
+
                 if (number?.isNumber() == true) {
                     val num =  number.toInt()
                     var numberResponse = numberService.getNumberMetadata(num)
                     call.respond(HttpStatusCode.OK, numberResponse)
                 }
-//                else {
-//                    call.respondText(
-//                        "Input '$number' is an invalid number. Please input an integer.",
-//                        status = HttpStatusCode.BadRequest
-//                    )
-//                }
+                else {
+                    call.respondText(
+                        "Input '$number' is an invalid number. Please input an integer.",
+                        status = HttpStatusCode.BadRequest
+                    )
+                }
             }
         }
     }

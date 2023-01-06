@@ -10,19 +10,6 @@ object ExtensionFunctions {
         return this.all { Character.isDigit(it) }
     }
 
-//    fun Int.toDayOfTheWeek(): DayOfTheWeekEnum {
-//        return when (this) {
-//            SUNDAY -> DayOfTheWeekEnum.Sunday
-//            MONDAY -> DayOfTheWeekEnum.Monday
-//            TUESDAY -> DayOfTheWeekEnum.Tuesday
-//            WEDNESDAY -> DayOfTheWeekEnum.Wednesday
-//            THURSDAY -> DayOfTheWeekEnum.Thursday
-//            FRIDAY -> DayOfTheWeekEnum.Friday
-//            SATURDAY -> DayOfTheWeekEnum.Saturday
-//            else -> DayOfTheWeekEnum.Unknown
-//        }
-//    }
-
     fun NumberMetadataResponse.addDayOfTheWeek(number : Int) : NumberMetadataResponse
     {
          this.number = number

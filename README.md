@@ -6,6 +6,9 @@ Provides metadata about a number that is provided as input.
 Default endpoint will return the following:<br>
 ![img.png](img.png)
 
+#### Request headers
+Request header `X-Request-Id` may be included. This will be generated automatically if it is excluded. This header is 
+is returned as part of the response.
 ---
 
 If you pass a number between 1 and 7 (first day of week being Sunday):<br>

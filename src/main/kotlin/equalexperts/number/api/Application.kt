@@ -1,11 +1,9 @@
 package equalexperts.number.api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import equalexperts.number.api.functions.ExtensionFunctions.isNumber
 import equalexperts.number.api.plugins.configureRouting
 import equalexperts.number.api.plugins.configureSerialization
 import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -20,14 +18,9 @@ import io.ktor.server.plugins.compression.deflate
 import io.ktor.server.plugins.compression.minimumSize
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.doublereceive.DoubleReceive
-import io.ktor.server.plugins.requestvalidation.RequestValidation
-import io.ktor.server.plugins.requestvalidation.RequestValidationException
-import io.ktor.server.plugins.requestvalidation.ValidationResult
-import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.request.uri
-import io.ktor.server.response.respond
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit {
@@ -91,21 +84,6 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
 
-    install(RequestValidation) {
 
-        validate<String> { bodyText ->
-
-            if (!bodyText?.isNumber()!!)
-                ValidationResult.Invalid("Input '$bodyText' is an invalid number. Please input an integer...")
-            else
-                ValidationResult.Valid
-        }
-
-        install(StatusPages) {
-            exception<RequestValidationException> { call, cause ->
-                call.respond(HttpStatusCode.BadRequest, cause.reasons.joinToString())
-            }
-        }
-    }
 }
 
