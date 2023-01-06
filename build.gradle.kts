@@ -35,5 +35,9 @@ dependencies {
     implementation("io.ktor:ktor-server-compression:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging:$ktor_version")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.+")
-
+    implementation("io.ktor:ktor-server-request-validation:$ktor_version")
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation("io.ktor:ktor-server-double-receive:$ktor_version")
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
+    implementation("io.ktor:ktor-server-call-id:$ktor_version")
 }
