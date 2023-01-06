@@ -10,7 +10,6 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.engine.applicationEngineEnvironment
-import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.callid.CallId
@@ -37,32 +36,25 @@ fun main(args: Array<String>): Unit {
         module {
             io.ktor.server.netty.EngineMain.main(args)
         }
-        // Private API
 
-        connector {
-            host = "127.0.0.1"
-            port = 9090
-        }
-        // Public API
-        connector {
-            host = "0.0.0.0"
-            port = 8080
-        }
     }
 
     embeddedServer(Netty, env).start(true)
 }
 
 const val  MINIMUMPAYLOADSIZE : Long = 3
+const val  LENGTHOFREQUESTID : Int = 15
+const val  REQUESTIDGENERATORDICTIONARY : String = "abcdeghijklmnop1234567890"
+
 val mapper = jacksonObjectMapper()
 
-@Suppress("unused") // application.conf references the main function. This annotation prevents the IDE from
+@Suppress("unused","MagicNumber")// application.conf references the main function. This annotation prevents the IDE from
 // marking it as unused.
 fun Application.module() {
     install(DoubleReceive)
 
     install(CallId) {
-        generate(15, "abcdeghijklmnop1234567890")
+        generate(LENGTHOFREQUESTID, REQUESTIDGENERATORDICTIONARY)
         retrieveFromHeader(HttpHeaders.XRequestId)
         replyToHeader(HttpHeaders.XRequestId)
 
