@@ -6,8 +6,10 @@ import equalexperts.number.api.plugins.configureSerialization
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
+import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.callid.CallId
 import io.ktor.server.plugins.callid.generate
@@ -20,6 +22,15 @@ import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.request.uri
+import io.ktor.server.response.respond
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
+import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
+import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit {
@@ -54,6 +65,7 @@ fun Application.module() {
         replyToHeader(HttpHeaders.XRequestId)
 
     }
+
     install(CallLogging) {
         level = Level.INFO
 
@@ -80,10 +92,35 @@ fun Application.module() {
     }
 
     install(ContentNegotiation) {
-        json()
+        json(Json {
+            prettyPrint = true
+            isLenient = true
+        })
     }
 
     configureSerialization()
+
     configureRouting()
+
+    val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+    install(MicrometerMetrics)
+    {
+        registry = appMicrometerRegistry
+        timers { call, exception ->
+            tag("region", call.request.headers["regionId"])
+        }
+
+        meterBinders = listOf(
+            JvmMemoryMetrics(),
+            JvmGcMetrics(),
+            ProcessorMetrics()
+        )
+    }
+
+    routing {
+        get("/metrics") {
+            call.respond(appMicrometerRegistry.scrape())
+        }
+    }
 }
 

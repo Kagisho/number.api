@@ -3,8 +3,10 @@ package equalexperts.number.api.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-class NumberMetadataResponse {
-    var number : Int = 0
+data class NumberMetadataResponse(var number : Int = 0){
+    // @SerialName("nameOfDayOfTheWeek")
     var nameOfDayOfTheWeek : DayOfTheWeekEnum  = DayOfTheWeekEnum.Unknown
+
+  //  @SerialName("isEven")
     var isEven : Boolean? = null
 }

@@ -1,6 +1,7 @@
 package equalexperts.number.api.plugins
 
 import equalexperts.number.api.functions.ExtensionFunctions.isNumber
+import equalexperts.number.api.models.NumberMetadataResponse
 import equalexperts.number.api.services.NumberService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -35,7 +36,7 @@ fun Application.configureRouting() {
 
                 if (number?.isNumber() == true) {
                     val num =  number.toInt()
-                    var numberResponse = numberService.getNumberMetadata(num)
+                    var numberResponse : NumberMetadataResponse = numberService.getNumberMetadata(num)
                     call.respond(HttpStatusCode.OK, numberResponse)
                 }
                 else {
@@ -45,6 +46,7 @@ fun Application.configureRouting() {
                     )
                 }
             }
+
         }
     }
 }
