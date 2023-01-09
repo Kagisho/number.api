@@ -20,7 +20,8 @@ class EndToEndTests {
     fun `default endpoint - test welcome text`() = testApplication {
         val response = client.get("/")
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals("Welcome to the Numbers Api. Call /swagger to view Open API Documentation. Call /number/<your_number> to get a metadata result.", response.bodyAsText())
+        assertEquals("Welcome to the Numbers Api. Call /swagger to view Open API Documentation. " +
+                "Call /number/<your_number> to get a metadata result.", response.bodyAsText())
     }
 
     @Test
@@ -46,6 +47,4 @@ class EndToEndTests {
 
         assertEquals(DayOfTheWeekEnum.Unknown, numberMetaDataResponse.nameOfDayOfTheWeek)
     }
-
-
 }
