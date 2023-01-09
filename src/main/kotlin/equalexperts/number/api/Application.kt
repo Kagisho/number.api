@@ -34,16 +34,6 @@ import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit {
-
-    //io.ktor.server.netty.EngineMain.main(args)
-
-//    val env = applicationEngineEnvironment {
-//        module {
-//            io.ktor.server.netty.EngineMain.main(args)
-//        }
-//    }
-//    embeddedServer(Netty, env).start(true)
-
     embeddedServer(Netty, port = 8080, host = "127.0.0.1", module = Application::module)
         .start(wait = true)
 }
@@ -63,7 +53,6 @@ fun Application.module() {
         generate(LENGTHOFREQUESTID, REQUESTIDGENERATORDICTIONARY)
         retrieveFromHeader(HttpHeaders.XRequestId)
         replyToHeader(HttpHeaders.XRequestId)
-
     }
 
     install(CallLogging) {

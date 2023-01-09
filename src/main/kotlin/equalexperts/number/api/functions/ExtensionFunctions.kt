@@ -7,7 +7,12 @@ object ExtensionFunctions {
     fun String.isNumber(): Boolean {
         if (this.isNullOrEmpty()) return false
 
-        return this.all { Character.isDigit(it) }
+        return try {
+            this.toInt()
+            true;
+        } catch (e: NumberFormatException) {
+            false
+        }
     }
 
     fun NumberMetadataResponse.addDayOfTheWeek(number : Int) : NumberMetadataResponse
