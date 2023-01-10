@@ -4,8 +4,7 @@ import equalexperts.number.api.models.DayOfTheWeekEnum
 import org.junit.jupiter.params.provider.Arguments
 import java.util.stream.Stream
 
-class TestHelpers {
-    companion object {
+object TestHelpers {
         @JvmStatic
         fun provideNumbersForDaysOfTheWeek(): Stream<Arguments?>? {
             return Stream.of(
@@ -20,6 +19,6 @@ class TestHelpers {
                 Arguments.of(-1, DayOfTheWeekEnum.Unknown),
                 Arguments.of(8, DayOfTheWeekEnum.Unknown),
             )
-        }
+
     }
 }

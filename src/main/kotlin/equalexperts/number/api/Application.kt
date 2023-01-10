@@ -64,12 +64,12 @@ fun Application.module() {
 
         format { call ->
                     val logObject = object {
-                    val Endpoint = call.request.uri
-                    val HttpStatusCode = call.response.status()?.value
-                    val HttpMethod = call.request.httpMethod.value
-                    val UserAgent = call.request.headers["User-Agent"]
-                    val XRequestId = call.request.headers[HttpHeaders.XRequestId]
-        }
+                                        val Endpoint = call.request.uri
+                                        val HttpStatusCode = call.response.status()?.value
+                                        val HttpMethod = call.request.httpMethod.value
+                                        val UserAgent = call.request.headers["User-Agent"]
+                                        val XRequestId = call.request.headers[HttpHeaders.XRequestId]
+                                    }
             mapper.writeValueAsString(logObject)
         }
     }
