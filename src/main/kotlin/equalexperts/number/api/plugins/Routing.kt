@@ -17,16 +17,18 @@ fun Application.configureRouting() {
 
     // TODO Is there a way to load this using dependency injection?
     routing {
-        swaggerUI(path = "swagger", swaggerFile = "documentation.yaml")
+
+        swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
 
         route("/") {
             get {
                 call.respondText(
                     "Welcome to the Numbers Api. Call /swagger to view Open API Documentation. Call " +
-                            "/number/<your_number> to get a metadata result.",
+                        "/number/<your_number> to get a metadata result.",
                     status = HttpStatusCode.OK
                 )
             }
+
             get("number/{number}") {
 
                 val number = call.parameters["number"]
@@ -43,7 +45,6 @@ fun Application.configureRouting() {
                     )
                 }
             }
-
         }
     }
 }

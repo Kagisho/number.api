@@ -1,0 +1,87 @@
+openapi: "3.0.3"
+info:
+  title: "number_api API"
+  description: "number_api API"
+  version: "1.0.0"
+servers:
+- url: "https://number_api"
+paths:
+  /:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+  /kg:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "kg ENDPOINT"
+  /number/{number}:
+    get:
+      description: ""
+      parameters:
+      - name: "number"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/NumberMetadataResponse"
+        "400":
+          description: "Bad Request"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+  /metrics:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+components:
+  schemas:
+    NumberMetadataResponse:
+      type: "object"
+      properties:
+        number:
+          type: "integer"
+          format: "int64"
+        nameOfDayOfTheWeek:
+          type: "string"
+          enum:
+          - "numericValue"
+          - "displayName"
+          - "Sunday"
+          - "Monday"
+          - "Tuesday"
+          - "Wednesday"
+          - "Thursday"
+          - "Friday"
+          - "Saturday"
+          - "Unknown"

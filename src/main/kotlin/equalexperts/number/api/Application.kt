@@ -22,6 +22,7 @@ import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.request.uri
+import io.ktor.server.resources.Resources
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
@@ -47,7 +48,7 @@ val mapper = jacksonObjectMapper()
 @Suppress("unused", "MagicNumber")
 fun Application.module() {
     install(DoubleReceive)
-
+    install(Resources)
     install(CallId) {
         generate(LENGTHOFREQUESTID, REQUESTIDGENERATORDICTIONARY)
         retrieveFromHeader(HttpHeaders.XRequestId)
