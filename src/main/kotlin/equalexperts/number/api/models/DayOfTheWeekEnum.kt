@@ -9,7 +9,7 @@ import equalexperts.number.api.models.WeekDayIndex.TUESDAY
 import equalexperts.number.api.models.WeekDayIndex.UNKNOWN
 import equalexperts.number.api.models.WeekDayIndex.WEDNESDAY
 
-enum class DayOfTheWeekEnum(val numericValue: Int, val displayName: String) {
+enum class DayOfTheWeekEnum(val numericValue: Long, val displayName: String) {
     Sunday(SUNDAY, "Sunday"),
     Monday(MONDAY, "Monday"),
     Tuesday(TUESDAY, "Tuesday"),

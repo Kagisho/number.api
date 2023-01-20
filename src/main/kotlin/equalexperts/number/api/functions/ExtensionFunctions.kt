@@ -8,22 +8,22 @@ object ExtensionFunctions {
         if (this.isNullOrEmpty()) return false
 
         return try {
-            this.toInt()
+            this.toBigInteger()
             true;
         } catch (e: NumberFormatException) {
             false
         }
     }
 
-    fun NumberMetadataResponse.addDayOfTheWeek(number : Int) : NumberMetadataResponse {
+    fun NumberMetadataResponse.addDayOfTheWeek(number : Long) : NumberMetadataResponse {
          this.number = number
          this.nameOfDayOfTheWeek = DayOfTheWeekEnum.values().firstOrNull { it.numericValue == number }
                                     ?: DayOfTheWeekEnum.Unknown
          return this
     }
 
-    fun NumberMetadataResponse.addIsEven(number : Int) : NumberMetadataResponse {
-        this.isEven = number % 2 == 0
+    fun NumberMetadataResponse.addIsEven(number : Long) : NumberMetadataResponse {
+        this.isEven = number % 2  == 0L
         return this
     }
 }

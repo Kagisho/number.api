@@ -33,7 +33,8 @@ import io.micrometer.prometheus.PrometheusMeterRegistry
 import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
-fun main(args: Array<String>): Unit {
+
+fun main() {
     embeddedServer(Netty, port = 8080, host = "127.0.0.1", module = Application::module)
         .start(wait = true)
 }
@@ -44,8 +45,7 @@ const val  REQUESTIDGENERATORDICTIONARY : String = "abcdeghijklmnop1234567890"
 
 val mapper = jacksonObjectMapper()
 
-@Suppress("unused","MagicNumber")// application.conf references the main function. This annotation prevents the IDE from
-// marking it as unused.
+@Suppress("unused","MagicNumber")
 fun Application.module() {
     install(DoubleReceive)
 
@@ -92,11 +92,10 @@ fun Application.module() {
     configureRouting()
 
     val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-    install(MicrometerMetrics)
-    {
+    install(MicrometerMetrics)  {
         registry = appMicrometerRegistry
-        timers { call, exception ->
-            tag("region", call.request.headers["regionId"])
+        timers { call, _ ->
+            call.request.headers["regionId"]?.let { tag("region", it) }
         }
 
         meterBinders = listOf(

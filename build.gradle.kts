@@ -36,13 +36,13 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger:$ktor_version")
     implementation("io.ktor:ktor-server-call-id:$ktor_version")
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktor_version")
-    implementation("io.micrometer:micrometer-registry-prometheus:1.10.2")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.10.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
     testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
 }

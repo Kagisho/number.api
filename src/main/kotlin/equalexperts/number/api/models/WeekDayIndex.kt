@@ -1,12 +1,12 @@
 package equalexperts.number.api.models
 
 object WeekDayIndex {
-    const val SUNDAY = 1
-    const val MONDAY = 2
-    const val TUESDAY = 3
-    const val WEDNESDAY = 4
-    const val THURSDAY = 5
-    const val FRIDAY = 6
-    const val SATURDAY = 7
-    const val UNKNOWN = 0
+    const val SUNDAY : Long = 1
+    const val MONDAY : Long = 2
+    const val TUESDAY : Long = 3
+    const val WEDNESDAY : Long = 4
+    const val THURSDAY : Long = 5
+    const val FRIDAY : Long = 6
+    const val SATURDAY : Long = 7
+    const val UNKNOWN : Long = 0
 }
