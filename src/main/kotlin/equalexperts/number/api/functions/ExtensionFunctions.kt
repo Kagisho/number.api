@@ -15,14 +15,14 @@ object ExtensionFunctions {
         }
     }
 
-    fun NumberMetadataResponse.addDayOfTheWeek(number : Long) : NumberMetadataResponse {
+    fun NumberMetadataResponse.addDayOfTheWeek(number: Long) : NumberMetadataResponse {
          this.number = number
          this.nameOfDayOfTheWeek = DayOfTheWeekEnum.values().firstOrNull { it.numericValue == number }
                                     ?: DayOfTheWeekEnum.Unknown
          return this
     }
 
-    fun NumberMetadataResponse.addIsEven(number : Long) : NumberMetadataResponse {
+    fun NumberMetadataResponse.addIsEven(number: Long): NumberMetadataResponse {
         this.isEven = number % 2  == 0L
         return this
     }

@@ -28,7 +28,8 @@ class EndToEndTests {
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals(
             "Welcome to the Numbers Api. Call /swagger to view Open API Documentation. " +
-                    "Call /number/<your_number> to get a metadata result.", response.bodyAsText()
+                "Call /number/<your_number> to get a metadata result.",
+            response.bodyAsText()
         )
     }
 
@@ -36,7 +37,7 @@ class EndToEndTests {
     @MethodSource("equalexperts.number.api.services.TestHelpers#provideNumbersForDaysOfTheWeek")
     @DisplayName("getMetaData endpoint - valid request parameter value")
     fun `getMetaData endpoint - valid day of the week`(number: String, expected: DayOfTheWeekEnum) = testApplication {
-        val response = client.get("/number/${number}") {
+        val response = client.get("/number/$number") {
             accept(ContentType.Application.Json)
         }
 
@@ -48,8 +49,11 @@ class EndToEndTests {
 
     @Test
     @DisplayName("getMetaData endpoint - check excluded X-Request-Id header")
-    @Description("The X-Request-Id is automatically generated if it is not provided. This test ensures that it is " +
-                "generated when it is not provided.")
+    @Description(
+        "The X-Request-Id is automatically generated if it is not provided. This test ensures that it is " +
+            "generated when it is not provided."
+    )
+
     fun `getMetaData endpoint - check excluded X-Request-Id header`() = testApplication {
         val response = client.get("/number/1") {
             accept(ContentType.Application.Json)
@@ -59,8 +63,10 @@ class EndToEndTests {
 
     @Test
     @DisplayName("getMetaData endpoint - check included X-Request-Id header")
-    @Description("The X-Request-Id is returned when it is populated in the request. This test ensures that the " +
-                "header passed in is returned in the response")
+    @Description(
+        "The X-Request-Id is returned when it is populated in the request. This test ensures that the " +
+            "header passed in is returned in the response"
+    )
     fun `getMetaData endpoint - check included X-Request-Id header`() = testApplication {
         val requestedId = "requested-id"
         val response = client.get("/number/1") {

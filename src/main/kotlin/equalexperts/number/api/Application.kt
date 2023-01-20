@@ -33,19 +33,18 @@ import io.micrometer.prometheus.PrometheusMeterRegistry
 import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
-
 fun main() {
     embeddedServer(Netty, port = 8080, host = "127.0.0.1", module = Application::module)
         .start(wait = true)
 }
 
-const val  MINIMUMPAYLOADSIZE : Long = 3
-const val  LENGTHOFREQUESTID : Int = 15
-const val  REQUESTIDGENERATORDICTIONARY : String = "abcdeghijklmnop1234567890"
+const val MINIMUMPAYLOADSIZE: Long = 3
+const val LENGTHOFREQUESTID: Int = 15
+const val REQUESTIDGENERATORDICTIONARY: String = "abcdeghijklmnop1234567890"
 
 val mapper = jacksonObjectMapper()
 
-@Suppress("unused","MagicNumber")
+@Suppress("unused", "MagicNumber")
 fun Application.module() {
     install(DoubleReceive)
 
@@ -63,28 +62,30 @@ fun Application.module() {
         }
 
         format { call ->
-                    val logObject = object {
-                                        val Endpoint = call.request.uri
-                                        val HttpStatusCode = call.response.status()?.value
-                                        val HttpMethod = call.request.httpMethod.value
-                                        val UserAgent = call.request.headers["User-Agent"]
-                                        val XRequestId = call.request.headers[HttpHeaders.XRequestId]
-                                    }
+            val logObject = object {
+                val Endpoint = call.request.uri
+                val HttpStatusCode = call.response.status()?.value
+                val HttpMethod = call.request.httpMethod.value
+                val UserAgent = call.request.headers["User-Agent"]
+                val XRequestId = call.request.headers[HttpHeaders.XRequestId]
+            }
             mapper.writeValueAsString(logObject)
         }
     }
 
     install(Compression) {
-           deflate {
+        deflate {
             minimumSize(MINIMUMPAYLOADSIZE)
         }
     }
 
     install(ContentNegotiation) {
-        json(Json {
-            prettyPrint = true
-            isLenient = true
-        })
+        json(
+            Json {
+                prettyPrint = true
+                isLenient = true
+            }
+        )
     }
 
     configureSerialization()
@@ -92,7 +93,7 @@ fun Application.module() {
     configureRouting()
 
     val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-    install(MicrometerMetrics)  {
+    install(MicrometerMetrics) {
         registry = appMicrometerRegistry
         timers { call, _ ->
             call.request.headers["regionId"]?.let { tag("region", it) }
@@ -111,4 +112,3 @@ fun Application.module() {
         }
     }
 }
-

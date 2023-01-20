@@ -13,11 +13,10 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 
-
 fun Application.configureRouting() {
 
     // TODO Is there a way to load this using dependency injection?
-      routing {
+    routing {
         swaggerUI(path = "swagger", swaggerFile = "documentation.yaml")
 
         route("/") {
@@ -30,15 +29,14 @@ fun Application.configureRouting() {
             }
             get("number/{number}") {
 
-               val number = call.parameters["number"]
+                val number = call.parameters["number"]
 
                 if (number?.isNumber() == true) {
-                    val num =  number.toLong()
-                    val numberService = NumberService();
-                    var numberResponse : NumberMetadataResponse = numberService.getNumberMetadata(num)
+                    val num = number.toLong()
+                    val numberService = NumberService()
+                    var numberResponse: NumberMetadataResponse = numberService.getNumberMetadata(num)
                     call.respond(HttpStatusCode.OK, numberResponse)
-                }
-                else {
+                } else {
                     call.respondText(
                         "Input '$number' is an invalid number. Please input an integer.",
                         status = HttpStatusCode.BadRequest
@@ -49,4 +47,3 @@ fun Application.configureRouting() {
         }
     }
 }
-
