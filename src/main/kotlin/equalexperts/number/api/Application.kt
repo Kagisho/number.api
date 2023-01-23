@@ -6,10 +6,8 @@ import equalexperts.number.api.plugins.configureSerialization
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
-import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.callid.CallId
 import io.ktor.server.plugins.callid.generate
@@ -23,15 +21,8 @@ import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.request.uri
 import io.ktor.server.resources.Resources
-import io.ktor.server.response.respond
-import io.ktor.server.routing.get
-import io.ktor.server.routing.routing
-import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
-import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
-import io.micrometer.core.instrument.binder.system.ProcessorMetrics
-import io.micrometer.prometheus.PrometheusConfig
-import io.micrometer.prometheus.PrometheusMeterRegistry
 import kotlinx.serialization.json.Json
+import org.koin.ktor.plugin.Koin
 import org.slf4j.event.Level
 
 fun main() {
@@ -39,18 +30,22 @@ fun main() {
         .start(wait = true)
 }
 
-const val MINIMUMPAYLOADSIZE: Long = 3
-const val LENGTHOFREQUESTID: Int = 15
-const val REQUESTIDGENERATORDICTIONARY: String = "abcdeghijklmnop1234567890"
+const val MINIMUM_PAYLOAD_SIZE: Long = 3
+const val LENGTH_OF_REQUEST_ID: Int = 15
+const val REQUEST_ID_GENERATOR_DICTIONARY: String = "abcdeghijklmnop1234567890"
 
 val mapper = jacksonObjectMapper()
 
-@Suppress("unused", "MagicNumber")
+@Suppress("unused")
 fun Application.module() {
+    install(Koin) {
+        modules(appModule)
+    }
+
     install(DoubleReceive)
     install(Resources)
     install(CallId) {
-        generate(LENGTHOFREQUESTID, REQUESTIDGENERATORDICTIONARY)
+        generate(LENGTH_OF_REQUEST_ID, REQUEST_ID_GENERATOR_DICTIONARY)
         retrieveFromHeader(HttpHeaders.XRequestId)
         replyToHeader(HttpHeaders.XRequestId)
     }
@@ -76,7 +71,7 @@ fun Application.module() {
 
     install(Compression) {
         deflate {
-            minimumSize(MINIMUMPAYLOADSIZE)
+            minimumSize(MINIMUM_PAYLOAD_SIZE)
         }
     }
 
@@ -90,26 +85,5 @@ fun Application.module() {
     }
 
     configureSerialization()
-
     configureRouting()
-
-    val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-    install(MicrometerMetrics) {
-        registry = appMicrometerRegistry
-        timers { call, _ ->
-            call.request.headers["regionId"]?.let { tag("region", it) }
-        }
-
-        meterBinders = listOf(
-            JvmMemoryMetrics(),
-            JvmGcMetrics(),
-            ProcessorMetrics()
-        )
-    }
-
-    routing {
-        get("/metrics") {
-            call.respond(appMicrometerRegistry.scrape())
-        }
-    }
 }

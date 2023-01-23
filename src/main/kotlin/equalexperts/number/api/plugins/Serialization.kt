@@ -7,4 +7,3 @@ fun Application.configureSerialization() {
     routing {
     }
 }
-
