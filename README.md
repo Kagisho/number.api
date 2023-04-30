@@ -2,6 +2,9 @@
 
 Provides metadata about a number that is provided as input. The api is created in Kotlin using the IntelliJ IDEA IDE.
 
+### Development setup
+IntelliJ IDEA will automatically download dependencies, thus it is recommended that you use this IDE. Had issues with new dependencies added to build script not reflecting immediately, restart the IDE helped with this.
+
 ### Usage
 Default endpoint will return the following:  
 
